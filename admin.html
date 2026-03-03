@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard - ToyBommaHub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<section class="booking-section">
+
+    <!-- LOGIN SECTION -->
+    <div id="loginSection">
+        <h2>Admin Login</h2>
+
+        <input type="text" id="username" placeholder="Username"><br><br>
+        <input type="password" id="password" placeholder="Password"><br><br>
+
+        <button onclick="login()" class="book-btn-main">Login</button>
+
+        <p id="error" style="color:red;"></p>
+    </div>
+
+
+    <!-- DASHBOARD SECTION -->
+    <div id="dashboardSection" style="display:none;">
+
+        <h2>Admin Dashboard</h2>
+        <button onclick="logout()" class="book-btn-main">Logout</button>
+
+        <h3>Total Revenue: ₹<span id="totalRevenue">0</span></h3>
+
+        <table border="1" cellpadding="10" id="bookingTable">
+            <tr>
+                <th>Movie</th>
+                <th>Seats</th>
+                <th>Amount</th>
+            </tr>
+        </table>
+
+    </div>
+
+</section>
+
+<script>
+
+const seatPrice = 150;
+
+function login() {
+
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    if(username === "admin" && password === "1234") {
+
+        localStorage.setItem("adminLoggedIn", "true");
+        showDashboard();
+
+    } else {
+        document.getElementById("error").textContent = "Invalid Credentials!";
+    }
+}
+
+function logout() {
+    localStorage.removeItem("adminLoggedIn");
+    location.reload();
+}
+
+function showDashboard() {
+
+    document.getElementById("loginSection").style.display = "none";
+    document.getElementById("dashboardSection").style.display = "block";
+
+    loadBookings();
+}
+
+function loadBookings() {
+
+    const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+    const table = document.getElementById("bookingTable");
+    const totalRevenueEl = document.getElementById("totalRevenue");
+
+    let totalRevenue = 0;
+
+    bookings.forEach(function(b){
+
+        const row = document.createElement("tr");
+
+        const movieCell = document.createElement("td");
+        movieCell.textContent = b.movie;
+
+        const seatsCell = document.createElement("td");
+        seatsCell.textContent = b.seats.join(", ");
+
+        const amount = b.seats.length * seatPrice;
+        totalRevenue += amount;
+
+        const amountCell = document.createElement("td");
+        amountCell.textContent = "₹" + amount;
+
+        row.appendChild(movieCell);
+        row.appendChild(seatsCell);
+        row.appendChild(amountCell);
+
+        table.appendChild(row);
+    });
+
+    totalRevenueEl.textContent = totalRevenue;
+}
+
+// Auto check login
+if(localStorage.getItem("adminLoggedIn") === "true") {
+    showDashboard();
+}
+
+</script>
+
+</body>
+</html>

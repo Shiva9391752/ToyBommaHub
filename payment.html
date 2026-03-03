@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment - ToyBommaHub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<section class="booking-section">
+
+    <h2>Payment Page</h2>
+
+    <p id="movieInfo"></p>
+    <p id="seatInfo"></p>
+    <p id="amountInfo"></p>
+
+    <h3>Enter Payment Details</h3>
+
+    <input type="text" placeholder="Card Number" class="payment-input"><br><br>
+    <input type="text" placeholder="Card Holder Name" class="payment-input"><br><br>
+    <input type="text" placeholder="Expiry Date" class="payment-input"><br><br>
+    <input type="text" placeholder="CVV" class="payment-input"><br><br>
+
+    <button onclick="completePayment()" class="book-btn-main">
+        Pay Now
+    </button>
+
+</section>
+
+<script>
+
+const movie = localStorage.getItem("selectedMovie");
+const seats = JSON.parse(localStorage.getItem("selectedSeats")) || [];
+const seatPrice = 150;
+
+document.getElementById("movieInfo").textContent =
+    "Movie: " + movie;
+
+document.getElementById("seatInfo").textContent =
+    "Seats: " + seats.join(", ");
+
+document.getElementById("amountInfo").textContent =
+    "Total Amount: ₹" + (seats.length * seatPrice);
+
+function completePayment() {
+
+    let bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+
+    const booking = {
+        movie: movie,
+        seats: seats
+    };
+
+    bookings.push(booking);
+    localStorage.setItem("bookings", JSON.stringify(bookings));
+
+    alert("Payment Successful 🎉 Booking Confirmed!");
+
+    localStorage.removeItem("selectedSeats");
+    localStorage.removeItem("selectedMovie");
+
+    window.location.href = "index.html";
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,182 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Body */
+body {
+    background-color: #111;
+    color: white;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background: #000;
+}
+
+.logo {
+    color: red;
+}
+
+.navbar nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    transition: 0.3s;
+}
+
+.navbar nav a:hover {
+    color: red;
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('images/banner.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    padding-left: 50px;
+}
+
+.hero-content h2 {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.hero-content p {
+    margin-bottom: 20px;
+}
+
+.hero-content button {
+    padding: 10px 20px;
+    background: red;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Movie Sections */
+.movies {
+    padding: 40px;
+}
+
+.movies h2 {
+    margin-bottom: 20px;
+}
+
+.movie-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* Movie Card */
+.movie-card {
+    background: #1c1c1c;
+    padding: 15px;
+    border-radius: 8px;
+    width: 220px;
+    transition: 0.3s;
+}
+
+.movie-card:hover {
+    transform: scale(1.05);
+}
+
+.movie-card img {
+    width: 100%;
+    border-radius: 6px;
+}
+
+.movie-card h3 {
+    margin-top: 10px;
+}
+
+.movie-card p {
+    font-size: 14px;
+    color: #ccc;
+    margin: 5px 0;
+}
+
+.movie-card button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: red;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 100%;
+}
+
+/* Reviews */
+.reviews {
+    padding: 40px;
+    background: #181818;
+}
+
+.reviews-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.review-card {
+    background: #1c1c1c;
+    padding: 20px;
+    border-radius: 8px;
+    width: 250px;
+}
+
+/* Contact */
+.contact {
+    padding: 40px;
+    text-align: center;
+}
+
+/* Footer */
+.main-footer {
+    text-align: center;
+    padding: 20px;
+    background: black;
+}
+.seat-container {
+    display: grid;
+    grid-template-columns: repeat(6, 40px);
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.seat {
+    width: 40px;
+    height: 40px;
+    background: gray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.seat.selected {
+    background: red;
+}
+
+.seat.booked {
+    background: black;
+    cursor: not-allowed;
+}
+.payment-input {
+    padding: 8px;
+    width: 250px;
+}

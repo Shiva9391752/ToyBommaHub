@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Tickets - ToyBommaHub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <h1 class="logo">ToyBommaHub</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="index.html#trending">Trending</a>
+        <a href="index.html#upcoming">Upcoming</a>
+        <a href="index.html#reviews">Reviews</a>
+    </nav>
+</header>
+
+<section class="booking-section">
+
+    <h2 id="movieTitle"></h2>
+
+    <h3>Select Your Seats</h3>
+    <div class="seat-container" id="seatContainer"></div>
+
+    <p>Selected Seats: <span id="count">0</span></p>
+    <p>Total Price: ₹<span id="total">0</span></p>
+
+    <button onclick="saveBooking()" class="book-btn-main">
+        Confirm Booking
+    </button>
+
+    <div id="bookingMessage" class="booking-message"></div>
+
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const params = new URLSearchParams(window.location.search);
+    const movieName = params.get("movie");
+
+    const movieTitle = document.getElementById("movieTitle");
+    const seatContainer = document.getElementById("seatContainer");
+    const count = document.getElementById("count");
+    const total = document.getElementById("total");
+    const bookingMessage = document.getElementById("bookingMessage");
+
+    if (movieName) {
+        movieTitle.textContent = "Booking for: " + movieName;
+    }
+
+    const seatPrice = 150;
+    let selectedSeats = [];
+
+    // Load existing bookings
+    let bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+
+    for (let i = 1; i <= 30; i++) {
+
+        const seat = document.createElement("div");
+        seat.classList.add("seat");
+        seat.textContent = i;
+
+        // Check if seat already booked
+        bookings.forEach(function (b) {
+            if (b.movie === movieName && b.seats.includes(i)) {
+                seat.classList.add("booked");
+                seat.style.pointerEvents = "none";
+            }
+        });
+
+        seat.addEventListener("click", function () {
+
+            seat.classList.toggle("selected");
+
+            if (selectedSeats.includes(i)) {
+                selectedSeats = selectedSeats.filter(s => s !== i);
+            } else {
+                selectedSeats.push(i);
+            }
+
+            count.textContent = selectedSeats.length;
+            total.textContent = selectedSeats.length * seatPrice;
+        });
+
+        seatContainer.appendChild(seat);
+    }
+
+    window.saveBooking = function () {
+
+        if (selectedSeats.length === 0) {
+            alert("Please select at least one seat");
+            return;
+        }
+
+        const booking = {
+            movie: movieName,
+            seats: selectedSeats
+        };
+
+        bookings.push(booking);
+        localStorage.setItem("bookings", JSON.stringify(bookings));
+localStorage.setItem("selectedSeats", JSON.stringify(selectedSeats));
+localStorage.setItem("selectedMovie", movieName);
+
+window.location.href = "payment.html";
+    };
+
+});
+</script>
+
+</body>
+</html>
